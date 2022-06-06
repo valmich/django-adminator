@@ -1,23 +1,68 @@
 {% extends "layouts/base.html" %}
 
-{% block title %} Google Maps {% endblock title %}
+{% block title %} Mapa {% endblock title %}
 
 <!-- Specific CSS goes HERE  -->
-{% block stylesheets %}{% endblock stylesheets %}
+{% block stylesheets %}    
+<link href="https://api.mapbox.com/mapbox-gl-js/v2.8.2/mapbox-gl.css" rel="stylesheet">
+<script src="https://api.mapbox.com/mapbox-gl-js/v2.8.2/mapbox-gl.js"></script>
+<style>
+body { margin: 0; padding: 0; }
+#map { position: absolute; top: 0; bottom: 0; width: 83%; }
+</style>
+{% endblock stylesheets %}
 
 {% block content %}
 
-    <div class="container-fluid">
-        <h4 class="c-grey-900 mT-10 mB-30">Google Maps</h4>
-        <div class="row">
-        <div class="col-md-12">
-            <div class="bgc-white bd bdrs-3 p-20 mB-20">
-            <h6 class="c-grey-900 mB-20">Google Maps</h6>
-            <div id="google-map" style="padding-bottom: 75%;"></div>
-            </div>
-        </div>
-        </div>
-    </div>
+
+<div id="map">
+<script>
+mapboxgl.accessToken = 'pk.eyJ1IjoidmFsbWljaCIsImEiOiJjbDMzM25idmcyZmN6M2pwMjVodHBrZ2MyIn0.Ld3MVGFKI4KtUS0eKPhEgA';
+const map = new mapboxgl.Map({
+container: 'map',
+style: 'mapbox://styles/valmich/cl31pti3o001x15pejsbfeq57',
+zoom: 13,
+center: [-49.873181, -6.079057]
+});
+
+map.on('load', () => {
+// Add the vector tileset as a source.
+map.addSource('ethnicity', {
+type: 'vector',
+url: '#'
+});
+map.addLayer({
+'id': 'population',
+'type': 'circle',
+'source': 'ethnicity',
+'source-layer': 'sf2010',
+'paint': {
+// Make circles larger as the user zooms from z12 to z22.
+'circle-radius': {
+'base': 1.75,
+'stops': [
+[12, 2],
+[22, 180]
+]
+},
+// Color circles by ethnicity, using a `match` expression.
+'circle-color': [
+'match',
+['get', 'ethnicity'],
+'Fisíca',
+'#fbb03b',
+'Mental',
+'#223b53',
+'Visual',
+'#e55e5e',
+'Auditivo',
+'#3bb2d0',
+/* other */ '#ccc'
+]
+}
+});
+});
+</script>
 
 {% endblock content %}
 

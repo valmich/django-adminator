@@ -1,6 +1,6 @@
 {% extends "layouts/base.html" %}
 
-{% block title %} Dashboard {% endblock title %}
+{% block title %} Painel de Controle{% endblock title %}
 
 <!-- Specific CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
@@ -15,7 +15,7 @@
           <div class="col-md-3">
             <div class="layers bd bgc-white p-20">
               <div class="layer w-100 mB-10">
-                <h6 class="lh-1">Total Visits</h6>
+                <h6 class="lh-1">Total de Cadastros</h6>
               </div>
               <div class="layer w-100">
                 <div class="peers ai-sb fxw-nw">
@@ -34,7 +34,7 @@
           <div class="col-md-3">
             <div class="layers bd bgc-white p-20">
               <div class="layer w-100 mB-10">
-                <h6 class="lh-1">Total Page Views</h6>
+                <h6 class="lh-1">Total de Agendamentos</h6>
               </div>
               <div class="layer w-100">
                 <div class="peers ai-sb fxw-nw">
@@ -49,30 +49,11 @@
             </div>
           </div>
 
-          <!-- #Unique Visitors ==================== -->
-          <div class="col-md-3">
-            <div class="layers bd bgc-white p-20">
-              <div class="layer w-100 mB-10">
-                <h6 class="lh-1">Unique Visitor</h6>
-              </div>
-              <div class="layer w-100">
-                <div class="peers ai-sb fxw-nw">
-                  <div class="peer peer-greed">
-                    <span id="sparklinedash3"></span>
-                  </div>
-                  <div class="peer">
-                    <span class="d-ib lh-0 va-m fw-600 bdrs-10em pX-15 pY-15 bgc-purple-50 c-purple-500">~12%</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-
           <!-- #Bounce Rate ==================== -->
           <div class="col-md-3">
             <div class="layers bd bgc-white p-20">
               <div class="layer w-100 mB-10">
-                <h6 class="lh-1">Bounce Rate</h6>
+                <h6 class="lh-1">Agenda Hoje</h6>
               </div>
               <div class="layer w-100">
                 <div class="peers ai-sb fxw-nw">
@@ -92,13 +73,67 @@
         <!-- #Site Visits ==================== -->
         <div class="bd bgc-white">
           <div class="peers fxw-nw@lg+ ai-s">
-            <div class="peer peer-greed w-70p@lg+ w-100@lg- p-20">
+            <div class="peer peer-greed w-300p@lg+ w-200@lg- p-20">
               <div class="layers">
-                <div class="layer w-100 mB-10">
-                  <h6 class="lh-1">Site Visits</h6>
-                </div>
-                <div class="layer w-100">
-                  <div id="world-map-marker"></div>
+       
+                <div id="map">
+
+  <link href="https://api.mapbox.com/mapbox-gl-js/v2.8.2/mapbox-gl.css" rel="stylesheet">
+  <script src="https://api.mapbox.com/mapbox-gl-js/v2.8.2/mapbox-gl.js"></script>
+<style>
+body { margin: 0; padding: 0; }
+#map { position: absolute; top: 0; bottom: 0; width: 67%; }
+</style>
+
+<div id="map">
+<script>
+	mapboxgl.accessToken = 'pk.eyJ1IjoidmFsbWljaCIsImEiOiJjbDMzM25idmcyZmN6M2pwMjVodHBrZ2MyIn0.Ld3MVGFKI4KtUS0eKPhEgA';
+const map = new mapboxgl.Map({
+container: 'map',
+style: 'mapbox://styles/valmich/cl31pti3o001x15pejsbfeq57',
+zoom: 14,
+center: [-49.873181, -6.079057]
+});
+ 
+map.on('load', () => {
+// Add the vector tileset as a source.
+map.addSource('ethnicity', {
+type: 'vector',
+url: '#'
+});
+map.addLayer({
+'id': 'population',
+'type': 'circle',
+'source': 'ethnicity',
+'source-layer': 'sf2010',
+'paint': {
+// Make circles larger as the user zooms from z12 to z22.
+'circle-radius': {
+'base': 1.75,
+'stops': [
+[12, 2],
+[22, 180]
+]
+},
+// Color circles by ethnicity, using a `match` expression.
+'circle-color': [
+'match',
+['get', 'ethnicity'],
+'Fisica',
+'#fbb03b',
+'Mental',
+'#223b53',
+'Auditiva',
+'#e55e5e',
+'Visual',
+'#3bb2d0',
+/* other */ '#ccc'
+]
+}
+});
+});
+</script>
+                  </div>
                 </div>
               </div>
             </div>
@@ -108,33 +143,38 @@
                   <!-- Progress Bars -->
                   <div class="layers">
                     <div class="layer w-100">
-                      <h5 class="mB-5">100k</h5>
-                      <small class="fw-600 c-grey-700">Visitors From USA</small>
+                      <h3 class="mB-5">Deficiências</h3>
+                     
+                      <small class="fw-600 c-grey-700">Fisíca</small>
+                      <h5 class="mB-5">184</h5>
                       <span class="pull-right c-grey-600 fsz-sm">50%</span>
                       <div class="progress mT-10">
                         <div class="progress-bar bgc-deep-purple-500" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:50%;"> <span class="sr-only">50% Complete</span></div>
                       </div>
                     </div>
                     <div class="layer w-100 mT-15">
-                      <h5 class="mB-5">1M</h5>
-                      <small class="fw-600 c-grey-700">Visitors From Europe</small>
-                      <span class="pull-right c-grey-600 fsz-sm">80%</span>
+                      
+                      <small class="fw-600 c-grey-700">Mental</small>
+                      <h5 class="mB-5">14</h5>
+                      <span class="pull-right c-grey-600 fsz-sm">03%</span>
                       <div class="progress mT-10">
                         <div class="progress-bar bgc-green-500" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:80%;"> <span class="sr-only">80% Complete</span></div>
                       </div>
                     </div>
                     <div class="layer w-100 mT-15">
-                      <h5 class="mB-5">450k</h5>
-                      <small class="fw-600 c-grey-700">Visitors From Australia</small>
+                      
+                      <small class="fw-600 c-grey-700">Auditivo</small>
+                      <h5 class="mB-5">235</h5>
                       <span class="pull-right c-grey-600 fsz-sm">40%</span>
                       <div class="progress mT-10">
                         <div class="progress-bar bgc-light-blue-500" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:40%;"> <span class="sr-only">40% Complete</span></div>
                       </div>
                     </div>
                     <div class="layer w-100 mT-15">
-                      <h5 class="mB-5">1B</h5>
-                      <small class="fw-600 c-grey-700">Visitors From India</small>
-                      <span class="pull-right c-grey-600 fsz-sm">90%</span>
+                      
+                      <small class="fw-600 c-grey-700">Visual</small>
+                      <h5 class="mB-5">125</h5>
+                      <span class="pull-right c-grey-600 fsz-sm">10%</span>
                       <div class="progress mT-10">
                         <div class="progress-bar bgc-blue-grey-500" role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" style="width:90%;"> <span class="sr-only">90% Complete</span></div>
                       </div>
@@ -147,19 +187,13 @@
                       <div class="easy-pie-chart" data-size="80" data-percent="75" data-bar-color="#f44336">
                         <span></span>
                       </div>
-                      <h6 class="fsz-sm">New Users</h6>
+                      <h6 class="fsz-sm">Novos Usuários</h6>
                     </div>
                     <div class="peer">
                       <div class="easy-pie-chart" data-size="80" data-percent="50" data-bar-color="#2196f3">
                         <span></span>
                       </div>
-                      <h6 class="fsz-sm">New Purchases</h6>
-                    </div>
-                    <div class="peer">
-                      <div class="easy-pie-chart" data-size="80" data-percent="90" data-bar-color="#ff9800">
-                        <span></span>
-                      </div>
-                      <h6 class="fsz-sm">Bounce Rate</h6>
+                      <h6 class="fsz-sm">Atendimentos</h6>
                     </div>
                   </div>
                 </div>
@@ -278,95 +312,14 @@
           </div>
         </div>
       </div>
-      <div class="masonry-item col-md-6">
-        <!-- #Sales Report ==================== -->
-        <div class="bd bgc-white">
-          <div class="layers">
-            <div class="layer w-100 p-20">
-              <h6 class="lh-1">Sales Report</h6>
-            </div>
-            <div class="layer w-100">
-              <div class="bgc-light-blue-500 c-white p-20">
-                <div class="peers ai-c jc-sb gap-40">
-                  <div class="peer peer-greed">
-                    <h5>November 2017</h5>
-                    <p class="mB-0">Sales Report</p>
-                  </div>
-                  <div class="peer">
-                    <h3 class="text-right">$6,000</h3>
-                  </div>
-                </div>
-              </div>
-              <div class="table-responsive p-20">
-                <table class="table">
-                  <thead>
-                    <tr>
-                      <th class="bdwT-0">Name</th>
-                      <th class="bdwT-0">Status</th>
-                      <th class="bdwT-0">Date</th>
-                      <th class="bdwT-0">Price</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td class="fw-600">Item #1 Name</td>
-                      <td><span class="badge bgc-red-50 c-red-700 p-10 lh-0 tt-c badge-pill">Unavailable</span> </td>
-                      <td>Nov 18</td>
-                      <td><span class="text-success">$12</span></td>
-                    </tr>
-                    <tr>
-                      <td class="fw-600">Item #2 Name</td>
-                      <td><span class="badge bgc-deep-purple-50 c-deep-purple-700 p-10 lh-0 tt-c badge-pill">New</span></td>
-                      <td>Nov 19</td>
-                      <td><span class="text-info">$34</span></td>
-                    </tr>
-                    <tr>
-                      <td class="fw-600">Item #3 Name</td>
-                      <td><span class="badge bgc-pink-50 c-pink-700 p-10 lh-0 tt-c badge-pill">New</span></td>
-                      <td>Nov 20</td>
-                      <td><span class="text-danger">-$45</span></td>
-                    </tr>
-                    <tr>
-                      <td class="fw-600">Item #4 Name</td>
-                      <td><span class="badge bgc-green-50 c-green-700 p-10 lh-0 tt-c badge-pill">Unavailable</span></td>
-                      <td>Nov 21</td>
-                      <td><span class="text-success">$65</span></td>
-                    </tr>
-                    <tr>
-                      <td class="fw-600">Item #5 Name</td>
-                      <td><span class="badge bgc-red-50 c-red-700 p-10 lh-0 tt-c badge-pill">Used</span></td>
-                      <td>Nov 22</td>
-                      <td><span class="text-success">$78</span></td>
-                    </tr>
-                    <tr>
-                      <td class="fw-600">Item #6 Name</td>
-                      <td><span class="badge bgc-orange-50 c-orange-700 p-10 lh-0 tt-c badge-pill">Used</span> </td>
-                      <td>Nov 23</td>
-                      <td><span class="text-danger">-$88</span></td>
-                    </tr>
-                    <tr>
-                      <td class="fw-600">Item #7 Name</td>
-                      <td><span class="badge bgc-yellow-50 c-yellow-700 p-10 lh-0 tt-c badge-pill">Old</span></td>
-                      <td>Nov 22</td>
-                      <td><span class="text-success">$56</span></td>
-                    </tr>
-                  </tbody>
-                </table>
-                </div>
-            </div>
-          </div>
-          <div class="ta-c bdT w-100 p-20">
-            <a href="#">Check all the sales</a>
-          </div>
-        </div>
-      </div>
+
       <div class="masonry-item col-md-6">
         <!-- #Weather ==================== -->
         <div class="bd bgc-white p-20">
           <div class="layers">
             <!-- Widget Title -->
             <div class="layer w-100 mB-20">
-              <h6 class="lh-1">Weather</h6>
+              <h6 class="lh-1">Tempo</h6>
             </div>
 
             <!-- Today Weather -->
@@ -378,7 +331,7 @@
                     <div class="layer w-100">
                       <div class="peers fxw-nw ai-c">
                         <div class="peer mR-20">
-                          <h3>32<sup>°F</sup></h3>
+                          <h3>32<sup>°C</sup></h3>
                         </div>
                         <div class="peer">
                           <canvas class="sleet" width="44" height="44"></canvas>

@@ -1,7 +1,6 @@
 version: '3.8'
 services:
-  appseed-app:
-    container_name: appseed_app
+  dmi-app:
     restart: always
     env_file: .env
     build: .
@@ -18,8 +17,7 @@ services:
       - ./nginx:/etc/nginx/conf.d
     networks:
       - web_network
-    depends_on: 
-      - appseed-app
+
 networks:
   db_network:
     driver: bridge
