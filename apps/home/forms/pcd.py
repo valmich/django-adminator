@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from django import forms
 from django.utils.translation import ugettext_lazy as _
 
@@ -15,15 +13,15 @@ class PcdForm(forms.ModelForm):
 
     class Meta:
         model = Pessoa
-        fields = ('nome_secretaria', 'nome', 
+        fields = ('nome', 
                 'informacoes_adicionais', )
         widgets = {
-            'nome_secretaria': forms.TextInput(attrs={'class': 'form-control'}),
+            # 'nome_secretaria': forms.TextInput(attrs={'class': 'form-control'}),
             'nome': forms.RadioSelect(attrs={'class': 'form-control'}),
             'informacoes_adicionais': forms.Textarea(attrs={'class': 'form-control'}),
         }
         labels = {
-            'nome_secretaria': _('Nome da Secretaria'),
+            # 'nome_secretaria': _('Nome da Secretaria'),
             'nome': _(''),
             'informacoes_adicionais': _('Informações Adicionais'),
         }

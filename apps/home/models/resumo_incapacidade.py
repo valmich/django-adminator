@@ -1,10 +1,12 @@
 # from typing_extensions import Self
+from pyexpat import model
 from django.db import models
 
 from decimal import Decimal
 
 from django.utils import timezone
 from datetime import datetime
+
 
 ### LISTA DE RESPOSTAS ###
 # LATERALIDADE = [
@@ -76,12 +78,12 @@ ORIGEM_AGRAVO = [
 
 ]
 
-# REAVALIACAO = [
-#     ('6 meses a menos de 1 ano', '6 meses a menos de 1 ano'),
-#     ('1 ano a menos de 2 anos', '1 ano a menos de 2 anos'),
-#     ('2 anos a menos de 5 anos', '2 anos a menos de 5 anos'),
-#     ('5 anos ou mais', '5 anos ou mais'),
-# ]
+REAVALIACAO = [
+    ('6 meses a menos de 1 ano', '6 meses a menos de 1 ano'),
+    ('1 ano a menos de 2 anos', '1 ano a menos de 2 anos'),
+    ('2 anos a menos de 5 anos', '2 anos a menos de 5 anos'),
+    ('5 anos ou mais', '5 anos ou mais'),
+]
 
 INCAPACIDADE = [
     ('Auditiva', 'Auditiva'),
@@ -91,12 +93,18 @@ INCAPACIDADE = [
     ('Mental', 'Mental'),
 ]
 
+INFORMANTE = [
+    ('A própria pessoa', 'A própria pessoa'),
+    ('Pessoa de convívio próximo', 'Pessoa de convívio próximo'),
+    ('Ambos', 'Ambos'),
+]
 
 class Cid(models.Model):
     cid = models.CharField(max_length=255)
 
     class Meta:
         verbose_name = "CID"
+        verbose_name_plural = 'CID'
 
     def __unicode__(self):
         s = u'%s' % (self.cid)
@@ -106,23 +114,46 @@ class Cid(models.Model):
         s = u'%s' % (self.cid)
         return s
 
-class LocalAvaliacao(models.Model):
-    local_avaliacao = models.CharField(max_length=50)
+class AcompanhamentoAvaliacao(models.Model):
+    nome_secretaria = models.CharField(max_length=50, null=True, blank=True)
+    local_avaliacao = models.CharField(max_length=50, null=True, blank=True)
+    nome_informante = models.CharField('Quem prestou as informações?',max_length=26, choices=INFORMANTE, null=True, blank=True)
+    
+
+
+    def __unicode__(self):
+        s = u'%s / %s' % (self.get_local_avaliacao_display(),
+                               self.nome_secretaria, self.local_avaliacao)
+        return s
+
+    def __str__(self):
+        s = u'%s / %s' % (self.get_local_avaliacao_display(),
+                               self.nome_secretaria, self.local_avaliacao)
+        return s
+
 
     class Meta:
-        verbose_name = "Local de Avaliação"
+        verbose_name = '"ACOMPANHAMENTO DA AVALIAÇÃO"'
+        verbose_name_plural = 'ACOMPANHAMENTO DA AVALIAÇÃO'
 
-    def __unicode__(self):
-        s = u'%s' % (self.local_avaliacao)
-        return s
 
-    def __str__(self):
-        s = u'%s' % (self.local_avaliacao)
-        return s
 
+################## Formulário padrão do médico assistente ##############################
+################## Relatório a ser preenchido pelo médico assistente ####################
 
 class ResumoIncapacidade(models.Model):
-    sem_diagnostico = models.BooleanField('Sem diagnóstico etiológico definido', null=True, blank=True)
+    documento_do_avaliado: models.CharField('Tipo',max_length=69)
+
+    estado_saude_seu_paciente_mudou: models.BooleanField('O estado de saúde de seu paciente (diagnóstico, sinais clínicos) mudou?', 
+                                                        null=True, blank=True)
+    houve_alguma_mudanca_nos_impactos_funcionais_relacionais: models.BooleanField('Houve alguma mudança nos impactos funcionais ou relacionais nas diferentes áreas da vida de'
+    'seu paciente (mobilidade, comunicação, cognição, manutenção pessoal, vida diária e doméstica, vida social e familiar, escolaridade e emprego)?', 
+                                                        null=True, blank=True)
+    o_manejo_terapeutico_de_seu_paciente_foi_alterado: models.BooleanField('O manejo terapêutico de seu paciente (medicação, incluindo suas consequências; médico ou paramédico; equipamentos) foi alterado?', 
+                                                        null=True, blank=True)
+
+    sem_diagnostico = models.BooleanField('Sem diagnóstico etiológico definido', 
+                                                        null=True, blank=True)
     
     categoria = models.CharField(
         max_length=69, choices=ORIGEM_AGRAVO, default='Ignorada')
@@ -138,7 +169,8 @@ class ResumoIncapacidade(models.Model):
         max_length=69, choices=ORIGEM_AGRAVO, default='Ignorada')
 
     class Meta:
-        verbose_name = "Resumo de Incapacidade"
+        verbose_name ='Resumo de Incapacidade'
+        verbose_name_plural = 'Resumo de Incapacidade'
 
     @property
     def format_incapacidade(self):
@@ -153,36 +185,6 @@ class ResumoIncapacidade(models.Model):
     def __str__(self):
         s = u'%s, %s, %s' % (
             self.categoria, self.cid, self.descricao)
-        return s
-
-INFORMANTE = [
-    ('A própria pessoa', 'A própria pessoa'),
-    ('Pessoa de convívio próximo', 'Pessoa de convívio próximo'),
-    ('Ambos', 'Ambos'),
-]
-
-
-class Participacao(models.Model):
-    informante = models.CharField('Quem prestou as informações?',max_length=26, choices=INFORMANTE, null=True, blank=True)
-    local_avaliacao = models.ForeignKey(
-        LocalAvaliacao, null=True, blank=True, on_delete=models.PROTECT)
-    
-    class Meta:
-        verbose_name = "Participação"
-
-    @property
-    def format_participante(self):
-        return '{0} - {1}'.format(self.informante, self.local_avaliacao)
-
-  
-    def __unicode__(self):
-        s = u'%s, %s' % (
-            self.informante, self.local_avaliacao)
-        return s
-
-    def __str__(self):
-        s = u'%s, %s' % (
-            self.informante, self.local_avaliacao)
         return s
 
 # ### ACOMPANHAMENTO MULTIDISCIPLINAR ###

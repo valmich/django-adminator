@@ -4,13 +4,18 @@ from django.contrib.auth.models import User
 import uuid
 import re
 
+from django_userforeignkey.models.fields import UserForeignKey
+from django.db.models import Sum, Count
+from django.db.models.deletion import PROTECT
 
 import datetime 
 from django.core.exceptions import ValidationError
 
+from apps.home.models.resumo_incapacidade import *
 from apps.home.models.escolas import *
 from apps.home.models.bairros import *
 from apps.home.models.bancos import *
+
 
 
 COR_RACA = [
@@ -124,18 +129,16 @@ COD_UF = [
     ('17', 'TO'),
 ]
 def validador_data_de_nascimento(value):
-    if value >= datetime.date.today() or value <= datetime.date(1900, 1, 1):
+    if value >= datetime.date.today() or value <= datetime.date(1930, 1, 1):
         raise ValidationError("Informe uma data válida")
     return value
 
 
 
 class Pessoa(models.Model):
-    nome_secretaria = models.CharField(max_length=255)
-
     id = models.UUIDField(default=uuid.uuid4, unique=True,
                           primary_key=True, editable=False)
-
+    
     nome = models.CharField(max_length=255)
     cpf = models.CharField(max_length=32, null=True, blank=True)
     rg = models.CharField(max_length=32, null=True, blank=True)
@@ -155,6 +158,7 @@ class Pessoa(models.Model):
         "Informações Adicionais", max_length=1055, null=True, blank=True)
 
     # Dados padrao
+
     endereco_padrao = models.ForeignKey(
         'home.Endereco', related_name="end_padrao", on_delete=models.CASCADE, null=True, blank=True)
     endereco_padrao = models.ForeignKey(
@@ -182,16 +186,23 @@ class Pessoa(models.Model):
         else:
             return ''
 
+    # def idade(self):
+    #     if self.nascimento is None:
+    #         self.nascimento = datetime.date.today()
+    #     d = (datetime.date.today() -
+    #          self.nascimento) // datetime.timedelta(days=365.2425)
+    #     return str(d) + ' anos'
+
+    @property
     def idade(self):
-        if self.nascimento is None:
-            self.nascimento = datetime.date.today()
-        d = (datetime.date.today() -
-             self.nascimento) // datetime.timedelta(days=365.2425)
-        return str(d) + ' anos'
+        if self.data_de_nascimento is None:
+            self.data_de_nascimento = datetime.date.today()
+        d = (datetime.date.today() - self.data_de_nascimento) // datetime.timedelta(days=365.2425)
+        return str(d)
 
     # Sobre o objeto
-    criado_por = models.ForeignKey(
-        User, on_delete=models.SET_NULL, null=True, blank=True)
+    usuario_criador = UserForeignKey(auto_user_add=True, on_delete=PROTECT, related_name='Pessoa_usuario_criador')
+    usuario_modificador = UserForeignKey(auto_user=True, on_delete=PROTECT, related_name='Pessoa_usuario_modificador')
     data_criacao = models.DateTimeField(auto_now_add=True)
     data_edicao = models.DateTimeField(auto_now_add=True)
 
@@ -340,11 +351,11 @@ class Documento(models.Model):
     def diretorio_upload(self, filename):
         return '{0}/{1}/{2}'.format('upload', self.cpf, filename)
 
-
     pessoa_documento = models.ForeignKey(
         Pessoa, related_name="documento", on_delete=models.CASCADE)
     tipo = models.CharField(max_length=32)
     documento = models.FileField()
+
     id = models.UUIDField(default=uuid.uuid4, unique=True,
                           primary_key=True, editable=False)
 

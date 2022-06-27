@@ -7,8 +7,8 @@ from .base import AdicionarPessoaView, PessoasListView, EditarPessoaView
 
 
 class AdicionarPcdView(AdicionarPessoaView):
-    template_name = "cadastro/pessoa_add.html"
-    success_url = reverse_lazy('cadastro:listapcdview')
+    template_name = "templates/home/forms.html"
+    success_url = reverse_lazy('cadastro:listapcdsview')
     success_message = "<b>%(nome)s </b>adicionado com sucesso."
     permission_codename = 'add_pcd'
 
@@ -29,15 +29,15 @@ class AdicionarPcdView(AdicionarPessoaView):
 
 
 class PcdListView(PessoasListView):
-    template_name = 'cadastro/pessoa_list.html'
+    template_name = 'templates/home/database.html'
     model = Pessoa
-    context_object_name = 'all_clientes'
-    success_url = reverse_lazy('cadastro:listaclientesview')
-    permission_codename = 'view_cliente'
+    context_object_name = 'all_pessoas'
+    success_url = reverse_lazy('cadastro:listapcdsview')
+    permission_codename = 'view_pessoa'
 
     def get_context_data(self, **kwargs):
         context = super(PcdListView, self).get_context_data(**kwargs)
-        context['title_complete'] = 'CLIENTES CADASTRADOS'
+        context['title_complete'] = 'PESSOAS CASDASTRADAS'
         context['add_url'] = reverse_lazy('cadastro:addpcdview')
 
         return context
@@ -48,7 +48,7 @@ class EditarPcdView(EditarPessoaView):
     model = Pessoa
     template_name = "cadastro/pessoa_edit.html"
     success_url = reverse_lazy('cadastro:listapcdsview')
-    success_message = " <b>%(nome_razao_social)s </b>editado com sucesso."
+    success_message = " <b>%(nome)s </b>editado com sucesso."
     permission_codename = 'change_pcd'
 
     def get_context_data(self, **kwargs):
@@ -70,5 +70,5 @@ class EditarPcdView(EditarPessoaView):
         self.object = self.get_object()
         form_class = self.get_form_class()
         form = form_class(request.POST, request.FILES,
-                          prefix='pessoa_form', instance=self.object, request=request)
+                          prefix='pcd_form', instance=self.object, request=request)
         return super(EditarPcdView, self).post(request, form, *args, **kwargs)

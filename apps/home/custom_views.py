@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 from django.views.generic import TemplateView, ListView, View
 from django.views.generic.edit import CreateView, UpdateView
 from django.views.generic.detail import DetailView

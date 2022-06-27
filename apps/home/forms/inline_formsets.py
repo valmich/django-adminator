@@ -112,7 +112,7 @@ class DocumentoForm(forms.ModelForm):
         }
         widgets = {
             'tipo': forms.TextInput(attrs={'class': 'form-control'}),
-            'documento': forms.TextInput(attrs={'class': 'form-control'}),
+            'documento': forms.FileInput(attrs={'class': 'form-control'}),
         }
 
 
@@ -128,3 +128,6 @@ BancoFormSet = inlineformset_factory(
     Pessoa, Banco, form=BancoForm, extra=1, can_delete=True)
 DocumentoFormSet = inlineformset_factory(
     Pessoa, Documento, form=DocumentoForm, extra=1, can_delete=True)
+
+
+

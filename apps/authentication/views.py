@@ -34,14 +34,14 @@ def register_user(request):
         form = SignUpForm(request.POST)
         if form.is_valid():
             form.save()
-            username = form.cleaned_data.get("username")
-            raw_password = form.cleaned_data.get("password1")
+            username = form.cleaned_data.get("Username")
+            raw_password = form.cleaned_data.get("Password")
             user = authenticate(username=username, password=raw_password)
 
             msg = 'Usuário criado com sucesso - por favor <a href="/login">entre Aqui!</a>.'
             success = True
 
-            return redirect("/login/")
+            # return redirect("/login/")
 
         else:
             msg = 'Formulário preenchido de forma invalida'
