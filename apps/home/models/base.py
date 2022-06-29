@@ -4,29 +4,15 @@ from django.contrib.auth.models import User
 import uuid
 import re
 
-<<<<<<< HEAD
-=======
-from django_userforeignkey.models.fields import UserForeignKey
-from django.db.models import Sum, Count
-from django.db.models.deletion import PROTECT
->>>>>>> 81036d86314ea403db0db3345483094056219b2e
 
 import datetime 
 from django.core.exceptions import ValidationError
 
-<<<<<<< HEAD
-=======
-from apps.home.models.resumo_incapacidade import *
->>>>>>> 81036d86314ea403db0db3345483094056219b2e
 from apps.home.models.escolas import *
 from apps.home.models.bairros import *
 from apps.home.models.bancos import *
 
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 81036d86314ea403db0db3345483094056219b2e
 COR_RACA = [
     ('Branca', 'Branca'),
     ('Preta', 'Preta'),
@@ -138,27 +124,17 @@ COD_UF = [
     ('17', 'TO'),
 ]
 def validador_data_de_nascimento(value):
-<<<<<<< HEAD
     if value >= datetime.date.today() or value <= datetime.date(1900, 1, 1):
-=======
-    if value >= datetime.date.today() or value <= datetime.date(1930, 1, 1):
->>>>>>> 81036d86314ea403db0db3345483094056219b2e
         raise ValidationError("Informe uma data válida")
     return value
 
 
 
 class Pessoa(models.Model):
-<<<<<<< HEAD
 
     id = models.UUIDField(default=uuid.uuid4, unique=True,
                           primary_key=True, editable=False)
 
-=======
-    id = models.UUIDField(default=uuid.uuid4, unique=True,
-                          primary_key=True, editable=False)
-    
->>>>>>> 81036d86314ea403db0db3345483094056219b2e
     nome = models.CharField(max_length=255)
     cpf = models.CharField(max_length=32, null=True, blank=True)
     rg = models.CharField(max_length=32, null=True, blank=True)
@@ -172,24 +148,15 @@ class Pessoa(models.Model):
         'Identidade de Genero', max_length=15, choices=ID_GENERO, null=True, blank=True)
     escolaridade = models.CharField(
         'Escolaridade', max_length=34, choices=ESCOLARIDADE, null=True, blank=True)
-<<<<<<< HEAD
     escola = models.CharField(max_length= 30, choices=ESCOLAS, null=True, blank=True)
     
-=======
->>>>>>> 81036d86314ea403db0db3345483094056219b2e
     estado_civil = models.CharField(
         'Estado Civil', max_length=36, choices=ESTADO_CIVIL, null=True, blank=True)
     informacoes_adicionais = models.CharField(
         "Informações Adicionais", max_length=1055, null=True, blank=True)
 
     # Dados padrao
-<<<<<<< HEAD
   
-=======
-
-    endereco_padrao = models.ForeignKey(
-        'home.Endereco', related_name="end_padrao", on_delete=models.CASCADE, null=True, blank=True)
->>>>>>> 81036d86314ea403db0db3345483094056219b2e
     endereco_padrao = models.ForeignKey(
         'home.Endereco', related_name="end_padrao", on_delete=models.CASCADE, null=True, blank=True)
     telefone_padrao = models.ForeignKey(
@@ -215,7 +182,6 @@ class Pessoa(models.Model):
         else:
             return ''
 
-<<<<<<< HEAD
     def idade(self):
         if self.nascimento is None:
             self.nascimento = datetime.date.today()
@@ -226,25 +192,6 @@ class Pessoa(models.Model):
     # Sobre o objeto
     criado_por = models.ForeignKey(
         User, on_delete=models.SET_NULL, null=True, blank=True)
-=======
-    # def idade(self):
-    #     if self.nascimento is None:
-    #         self.nascimento = datetime.date.today()
-    #     d = (datetime.date.today() -
-    #          self.nascimento) // datetime.timedelta(days=365.2425)
-    #     return str(d) + ' anos'
-
-    @property
-    def idade(self):
-        if self.data_de_nascimento is None:
-            self.data_de_nascimento = datetime.date.today()
-        d = (datetime.date.today() - self.data_de_nascimento) // datetime.timedelta(days=365.2425)
-        return str(d)
-
-    # Sobre o objeto
-    usuario_criador = UserForeignKey(auto_user_add=True, on_delete=PROTECT, related_name='Pessoa_usuario_criador')
-    usuario_modificador = UserForeignKey(auto_user=True, on_delete=PROTECT, related_name='Pessoa_usuario_modificador')
->>>>>>> 81036d86314ea403db0db3345483094056219b2e
     data_criacao = models.DateTimeField(auto_now_add=True)
     data_edicao = models.DateTimeField(auto_now_add=True)
 
@@ -282,12 +229,8 @@ class Endereco(models.Model):
     tipo_endereco = models.CharField(
         max_length=3, null=True, blank=True, choices=TIPO_ENDERECO)
     logradouro = models.CharField(max_length=255, null=True, blank=True)
-<<<<<<< HEAD
     numero = models.IntegerField(null=True, blank=True )
 
-=======
-    numero = models.CharField(max_length=16, null=True, blank=True)
->>>>>>> 81036d86314ea403db0db3345483094056219b2e
     bairro = models.CharField(
         max_length=64, choices=BAIRROS, null=True, blank=True)
     complemento = models.CharField(max_length=64, null=True, blank=True)
@@ -398,19 +341,11 @@ class Documento(models.Model):
     def diretorio_upload(self, filename):
         return '{0}/{1}/{2}'.format('upload', self.cpf, filename)
 
-<<<<<<< HEAD
 
     pessoa_documento = models.ForeignKey(
         Pessoa, related_name="documento", on_delete=models.CASCADE)
     tipo = models.CharField(max_length=32)
-    documento = models.ImageField(null=True, blank=True, upload_to="pessoa_documento/")
-=======
-    pessoa_documento = models.ForeignKey(
-        Pessoa, related_name="documento", on_delete=models.CASCADE)
-    tipo = models.CharField(max_length=32)
-    documento = models.FileField()
-
->>>>>>> 81036d86314ea403db0db3345483094056219b2e
+    documento = models.ImageField(null=True, blank=True)
     id = models.UUIDField(default=uuid.uuid4, unique=True,
                           primary_key=True, editable=False)
 

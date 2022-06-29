@@ -1,8 +1,3 @@
-<<<<<<< HEAD
-=======
-# from typing_extensions import Self
-from pyexpat import model
->>>>>>> 81036d86314ea403db0db3345483094056219b2e
 from django.db import models
 
 from decimal import Decimal
@@ -10,10 +5,6 @@ from decimal import Decimal
 from django.utils import timezone
 from datetime import datetime
 
-<<<<<<< HEAD
-=======
-
->>>>>>> 81036d86314ea403db0db3345483094056219b2e
 ### LISTA DE RESPOSTAS ###
 # LATERALIDADE = [
 #     ('Ambidestro', 'Ambidestro'),
@@ -84,21 +75,12 @@ ORIGEM_AGRAVO = [
 
 ]
 
-<<<<<<< HEAD
 # REAVALIACAO = [
 #     ('6 meses a menos de 1 ano', '6 meses a menos de 1 ano'),
 #     ('1 ano a menos de 2 anos', '1 ano a menos de 2 anos'),
 #     ('2 anos a menos de 5 anos', '2 anos a menos de 5 anos'),
 #     ('5 anos ou mais', '5 anos ou mais'),
 # ]
-=======
-REAVALIACAO = [
-    ('6 meses a menos de 1 ano', '6 meses a menos de 1 ano'),
-    ('1 ano a menos de 2 anos', '1 ano a menos de 2 anos'),
-    ('2 anos a menos de 5 anos', '2 anos a menos de 5 anos'),
-    ('5 anos ou mais', '5 anos ou mais'),
-]
->>>>>>> 81036d86314ea403db0db3345483094056219b2e
 
 INCAPACIDADE = [
     ('Auditiva', 'Auditiva'),
@@ -108,24 +90,12 @@ INCAPACIDADE = [
     ('Mental', 'Mental'),
 ]
 
-<<<<<<< HEAD
-=======
-INFORMANTE = [
-    ('A própria pessoa', 'A própria pessoa'),
-    ('Pessoa de convívio próximo', 'Pessoa de convívio próximo'),
-    ('Ambos', 'Ambos'),
-]
->>>>>>> 81036d86314ea403db0db3345483094056219b2e
 
 class Cid(models.Model):
     cid = models.CharField(max_length=255)
 
     class Meta:
         verbose_name = "CID"
-<<<<<<< HEAD
-=======
-        verbose_name_plural = 'CID'
->>>>>>> 81036d86314ea403db0db3345483094056219b2e
 
     def __unicode__(self):
         s = u'%s' % (self.cid)
@@ -135,7 +105,6 @@ class Cid(models.Model):
         s = u'%s' % (self.cid)
         return s
 
-<<<<<<< HEAD
 class LocalAvaliacao(models.Model):
     local_avaliacao = models.CharField(max_length=50)
 
@@ -153,48 +122,6 @@ class LocalAvaliacao(models.Model):
 
 class ResumoIncapacidade(models.Model):
     sem_diagnostico = models.BooleanField('Sem diagnóstico etiológico definido', null=True, blank=True)
-=======
-class AcompanhamentoAvaliacao(models.Model):
-    nome_secretaria = models.CharField(max_length=50, null=True, blank=True)
-    local_avaliacao = models.CharField(max_length=50, null=True, blank=True)
-    nome_informante = models.CharField('Quem prestou as informações?',max_length=26, choices=INFORMANTE, null=True, blank=True)
-    
-
-
-    def __unicode__(self):
-        s = u'%s / %s' % (self.get_local_avaliacao_display(),
-                               self.nome_secretaria, self.local_avaliacao)
-        return s
-
-    def __str__(self):
-        s = u'%s / %s' % (self.get_local_avaliacao_display(),
-                               self.nome_secretaria, self.local_avaliacao)
-        return s
-
-
-    class Meta:
-        verbose_name = '"ACOMPANHAMENTO DA AVALIAÇÃO"'
-        verbose_name_plural = 'ACOMPANHAMENTO DA AVALIAÇÃO'
-
-
-
-################## Formulário padrão do médico assistente ##############################
-################## Relatório a ser preenchido pelo médico assistente ####################
-
-class ResumoIncapacidade(models.Model):
-    documento_do_avaliado: models.CharField('Tipo',max_length=69)
-
-    estado_saude_seu_paciente_mudou: models.BooleanField('O estado de saúde de seu paciente (diagnóstico, sinais clínicos) mudou?', 
-                                                        null=True, blank=True)
-    houve_alguma_mudanca_nos_impactos_funcionais_relacionais: models.BooleanField('Houve alguma mudança nos impactos funcionais ou relacionais nas diferentes áreas da vida de'
-    'seu paciente (mobilidade, comunicação, cognição, manutenção pessoal, vida diária e doméstica, vida social e familiar, escolaridade e emprego)?', 
-                                                        null=True, blank=True)
-    o_manejo_terapeutico_de_seu_paciente_foi_alterado: models.BooleanField('O manejo terapêutico de seu paciente (medicação, incluindo suas consequências; médico ou paramédico; equipamentos) foi alterado?', 
-                                                        null=True, blank=True)
-
-    sem_diagnostico = models.BooleanField('Sem diagnóstico etiológico definido', 
-                                                        null=True, blank=True)
->>>>>>> 81036d86314ea403db0db3345483094056219b2e
     
     categoria = models.CharField(
         max_length=69, choices=ORIGEM_AGRAVO, default='Ignorada')
@@ -210,12 +137,7 @@ class ResumoIncapacidade(models.Model):
         max_length=69, choices=ORIGEM_AGRAVO, default='Ignorada')
 
     class Meta:
-<<<<<<< HEAD
         verbose_name = "Resumo de Incapacidade"
-=======
-        verbose_name ='Resumo de Incapacidade'
-        verbose_name_plural = 'Resumo de Incapacidade'
->>>>>>> 81036d86314ea403db0db3345483094056219b2e
 
     @property
     def format_incapacidade(self):
@@ -232,7 +154,6 @@ class ResumoIncapacidade(models.Model):
             self.categoria, self.cid, self.descricao)
         return s
 
-<<<<<<< HEAD
 INFORMANTE = [
     ('A própria pessoa', 'A própria pessoa'),
     ('Pessoa de convívio próximo', 'Pessoa de convívio próximo'),
@@ -263,8 +184,6 @@ class Participacao(models.Model):
             self.informante, self.local_avaliacao)
         return s
 
-=======
->>>>>>> 81036d86314ea403db0db3345483094056219b2e
 # ### ACOMPANHAMENTO MULTIDISCIPLINAR ###
 # class AcompanhamentoMultidisciplinar(models.Model):
 #     frequenta_alguma_instituicao_de_reabilitacao = models.CharField('Frequenta alguma instituição de reabilitação?', 

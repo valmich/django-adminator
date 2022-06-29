@@ -1,27 +1,15 @@
-<<<<<<< HEAD:apps/home/views.py
-from email.mime import base
-from time import strftime
-=======
->>>>>>> 81036d86314ea403db0db3345483094056219b2e:apps/home/views/views.py
 from django import template
 import django
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.urls import reverse
-<<<<<<< HEAD:apps/home/views.py
 from apps.home.models import Pessoa, Cid, LocalAvaliacao, ResumoIncapacidade, Participacao
 from apps.home.models.pcd import Pcd
 from django.db.models import Sum
 from django.http import JsonResponse
 from datetime import datetime
 from django.shortcuts import render
-=======
-from apps.home.forms import pessoa_forms
-
-from apps.home.models.base import Pessoa
-
->>>>>>> 81036d86314ea403db0db3345483094056219b2e:apps/home/views/views.py
 
 @login_required(login_url="/login/")
 def index(request):

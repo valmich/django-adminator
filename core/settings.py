@@ -29,10 +29,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'apps.home',
-<<<<<<< HEAD
-=======
-    'django_userforeignkey'
->>>>>>> 81036d86314ea403db0db3345483094056219b2e
 ]
 
 MIDDLEWARE = [
@@ -133,12 +129,6 @@ STATICFILES_DIRS = (
 )
 
 
-<<<<<<< HEAD
 #############################################################
 #############################################################
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-=======
-
-DEFAULT_AUTO_FIELD='django.db.models.AutoField'
-#############################################################
->>>>>>> 81036d86314ea403db0db3345483094056219b2e
