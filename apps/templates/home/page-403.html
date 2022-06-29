@@ -1,6 +1,6 @@
 {% extends "layouts/base-error.html" %}
 
-{% block title %} 403 Error {% endblock title %}
+{% block title %} Erro 403 {% endblock title %}
 
 {% block content %}
 
@@ -11,10 +11,10 @@
 
       <div class="d-f jc-c fxd-c">
         <h1 class="mB-30 fw-900 lh-1 c-red-500" style="font-size: 60px;">403</h1>
-        <h3 class="mB-10 fsz-lg c-grey-900 tt-c">Access Denied</h3>
-        <p class="mB-30 fsz-def c-grey-700">Please authenticate or contact support.</p>
+        <h3 class="mB-10 fsz-lg c-grey-900 tt-c">Acesso Negado</h3>
+        <p class="mB-30 fsz-def c-grey-700">Por favor, autentique ou entre em contato com o suporte.</p>
         <div>
-          <a href="{{ url_for('base_blueprint.login') }}" type="primary" class="btn btn-primary">Login</a>
+          <a href="{{ url_for('base_blueprint.login') }}" type="primary" class="btn btn-primary">Entrar</a>
         </div>
       </div>
     </div>

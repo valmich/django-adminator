@@ -1,71 +1,124 @@
-
 {% extends "layouts/base-fullscreen.html" %}
 
-{% block title %} Register {% endblock title %}
+{% block title %} Registrar-se{% endblock %} 
 
+<!-- Specific Page CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
 
-      <div class="peer peer-greed h-100 pos-r bgr-n bgpX-c bgpY-c bgsz-cv" style='background-image: url("/static/assets/static/images/bg.jpg")'>
-        <div class="pos-a centerXY">
-          <div class="bgc-white bdrs-50p pos-r" style="width: 120px; height: 120px;">
-            <img class="pos-a centerXY" src="/static/assets/static/images/logo.png" alt="">
-          </div>
-        </div>
-      </div>
-      <div class="col-12 col-md-4 peer pX-40 pY-80 h-100 bgc-white scrollable pos-r" style="min-width: 320px;">
-      
-        <h3 class="fw-300 c-grey-900 mB-40">
-          <a target="_blank" rel="noopener noreferrer" 
-             href="https://appseed.us/admin-dashboards/django-dashboard-adminator">Django Dashboard Adminator</a> - Register
-        </h3>
+    <main>
+        <section class="vh-lg-100 mt-5 mt-lg-0 bg-soft d-flex align-items-center">
+            <div class="container">
+                <p class="text-center">
+                    Diagnóstico Municipal de Inclusão
+                </p>
+                <div class="row justify-content-space-around form-bg-image" data-background-lg="/static/assets/img/illustrations/signin.svg">
+                    <div class="col-12 d-flex align-items-center justify-content-center">
+                        <div class="bg-white shadow border-0 rounded border-light p-4 p-lg-5 w-100 fmxw-500">
+                            <div class="text-center text-md-center mb-4 mt-md-0">
+                                <h1 class="mb-0 h3">
+                                Registrar-se
+                                </h1>
+                                <br />
+                                <p>
+                                    {% if msg %}
+                                        {{ msg | safe }}
+                                    {% else %}
+                                        Adicione suas credênciais
+                                    {% endif %}                                     
+                                </p> 
+                            </div>
+                            <form method="post" action="" class="mt-4">
+                                
+                                {% csrf_token %}
 
-        {% if msg %}
-            <h4 class="fw-300 c-grey-900 mB-40">{{ msg | safe }}</h4>
-        {% else %}
-            <p class="fw-300 c-grey-900 mB-40">
-              Add your credentials 
-            </p>
-        {% endif %}
+                                <div class="form-group mb-4">
+                                    <label for="email">Usuário</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="basic-addon1">
+                                            <span class="fas fa-user-circle"></span>
+                                        </span>
+                                        {{ form.username }}
+                                    </div>  
+                                    <span class="text-error">{{ form.username.errors }}</span>
+                                </div>
 
-        <form method="post" action="">
+                                <!-- Form -->
+                                <div class="form-group mb-4">
+                                    <label for="email">Seu e-mail</label>
+                                    <div class="input-group">
+                                        <span class="input-group-text" id="basic-addon1">
+                                            <span class="fas fa-envelope"></span>
+                                        </span>
+                                        {{ form.email }}
+                                    </div>  
+                                    <span class="text-error">{{ form.email.errors }}</span>
+                                </div>
+                                <!-- End of Form -->
+                                <div class="form-group">
+                                    
+                                    <!-- Form -->
+                                    <div class="form-group mb-4">
+                                        <label for="password">Sua senha</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text" id="basic-addon2">
+                                                <span class="fas fa-unlock-alt"></span>
+                                            </span>
+                                            {{ form.password1 }}
+                                        </div>  
+                                        <span class="text-error">{{ form.password1.errors }}</span>
+                                    </div>
+                                    <div class="form-group mb-4">
+                                        <label for="password">Confirme sua senha</label>
+                                        <div class="input-group">
+                                            <span class="input-group-text" id="basic-addon2">
+                                                <span class="fas fa-unlock-alt"></span>
+                                            </span>
+                                            {{ form.password2 }}
+                                        </div>  
+                                        <span class="text-error">{{ form.password2.errors }}</span>
+                                    </div>
 
-          {% csrf_token %}
+                                    <!-- End of Form -->
+                                    <div class="mb-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" id="remember">
+                                            <label class="form-check-label fw-normal mb-0" for="remember">
+                                                Eu aceito os <a href="#" class="fw-bold">termos e condições</a>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" name="register" class="btn btn-gray-800">Registrar</button>
+                                </div>
+                            </form>
+                            <br />
+                        
+                            <div class="mt-3 mb-4 text-center">
+                                <span class="fw-normal">Entrar com</span>
+                            </div>
+                            <div class="d-flex justify-content-center my-4">
+                                <a href="#" class="btn btn-icon-only btn-pill btn-outline-gray-500 me-2" aria-label="facebook button" title="facebook button">
+                                    <svg class="icon icon-xxs" aria-hidden="true" focusable="false" data-prefix="fab" data-icon="facebook-f" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 320 512"><path fill="currentColor" d="M279.14 288l14.22-92.66h-88.91v-60.13c0-25.35 12.42-50.06 52.24-50.06h40.42V6.26S260.43 0 225.36 0c-73.22 0-121.08 44.38-121.08 124.72v70.62H22.89V288h81.39v224h100.17V288z"></path></svg>
+                                </a>
+                            </div>
 
-          <div class="form-group">
-            <label class="text-normal text-dark">Username</label>
-            {{ form.username }}
-          </div>
-          <span class="text-error">{{ form.username.errors }}</span>
-
-          <div class="form-group">
-            <label class="text-normal text-dark">eMail Address</label>
-            {{ form.email }}
-          </div>
-          <span class="text-error">{{ form.email.errors }}</span>
-
-          <div class="form-group">
-            <label class="text-normal text-dark">Password</label>
-            {{ form.password1 }}
-          </div>
-          <span class="text-error">{{ form.password1.errors }}</span>
-
-          <div class="form-group">
-            <label class="text-normal text-dark">Password</label>
-            {{ form.password2 }}
-          </div>
-          <span class="text-error">{{ form.password2.errors }}</span>
-
-          <div class="form-group">
-            <button type="submit" name="register" class="btn btn-primary">Register</button> 
-
-            &nbsp; &nbsp;
-            <span class="text-small font-weight-semibold">Have and account?</span>
-            <a href="{% url 'login' %}" class="text-black text-small">Login</a>    
-          </div>
-
-        </form>
-      </div>
+                            <div class="d-flex justify-content-center align-items-center mt-4">
+                                <span class="fw-normal">
+                                    Você já tem uma conta?
+                                    <a href="{% url 'login' %}" class="fw-bold">Entrar</a>
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
 
 {% endblock content %}
+
+<!-- Specific Page JS goes HERE  -->
+{% block javascripts %}{% endblock javascripts %}

@@ -13,8 +13,8 @@ SECRET_KEY = config('SECRET_KEY', default='S#perS3crEt_1122')
 DEBUG = config('DEBUG', default=True, cast=bool)
 
 # load production server from .env
-ALLOWED_HOSTS        = ['localhost', 'localhost:85', '127.0.0.1', config('SERVER', default='127.0.0.1')]
-CSRF_TRUSTED_ORIGINS = ['http://localhost:85', 'http://127.0.0.1', 'https://' + config('SERVER', default='127.0.0.1')]
+ALLOWED_HOSTS        = ['localhost', 'localhost:85', '192.168.238.129', '0.0.0.0', '*', config('SERVER', default='127.0.0.1')]
+CSRF_TRUSTED_ORIGINS = ['http://localhost:85', 'https://comped.pbs.dev.br' + config('SERVER', default='127.0.0.1')]
 
 # Application definition
 
@@ -29,6 +29,10 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'apps.home',
+<<<<<<< HEAD
+=======
+    'django_userforeignkey'
+>>>>>>> 81036d86314ea403db0db3345483094056219b2e
 ]
 
 MIDDLEWARE = [
@@ -40,6 +44,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django_userforeignkey.middleware.UserForeignKeyMiddleware',
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -69,12 +75,21 @@ WSGI_APPLICATION = 'core.wsgi.application'
 # https://docs.djangoproject.com/en/3.0/ref/settings/#databases
 
 DATABASES = {
+
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.postgresql_psycopg2',
+    #     'NAME': 'dmi',
+    #     'USER': 'admin',
+    #     'PASSWORD': 'johNg6yi7zo3ieThad3F',
+    #     'HOST': 'localhost',
+    #     'PORT': '',
+
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': 'db.sqlite3',
+
     }
 }
-
 # Password validation
 # https://docs.djangoproject.com/en/3.0/ref/settings/#auth-password-validators
 
@@ -107,10 +122,8 @@ USE_L10N = True
 USE_TZ = True
 
 #############################################################
-# SRC: https://devcenter.heroku.com/articles/django-assets
-
 # Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/1.9/howto/static-files/
+
 STATIC_ROOT = os.path.join(CORE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 
@@ -120,6 +133,12 @@ STATICFILES_DIRS = (
 )
 
 
+<<<<<<< HEAD
 #############################################################
 #############################################################
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+=======
+
+DEFAULT_AUTO_FIELD='django.db.models.AutoField'
+#############################################################
+>>>>>>> 81036d86314ea403db0db3345483094056219b2e
