@@ -1,106 +1,77 @@
 {% extends "layouts/base.html" %}
 
-{% block title %} Forms {% endblock title %}
+{% block title %} Cadastro PcD{% endblock title %}
+
 
 <!-- Specific CSS goes HERE  -->
 {% block stylesheets %}{% endblock stylesheets %}
 
 {% block content %}
+          <!--Header-->
+          <div class="header masonry-item col-md-10">
+            <div><small>   Campos marcados com <strong style="color:red;">*</strong> são obrigatórios.</small></div>
 
+          </div>
+          <!--# Header-->
     <div class="row gap-20 masonry pos-r">
         <div class="masonry-sizer col-md-6"></div>
         <div class="masonry-item col-md-6">
         <div class="bgc-white p-20 bd">
-            <h6 class="c-grey-900">Basic Form</h6>
+            <h6 class="c-grey-900">Sobre seu endereço</h6>
             <div class="mT-30">
-            <form>
-                <div class="form-group">
-                <label for="exampleInputEmail1">Email address</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
-                <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
-                </div>
-                <div class="form-group">
-                <label for="exampleInputPassword1">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
-                </div>
-                <div class="checkbox checkbox-circle checkbox-info peers ai-c mB-15">
-                <input type="checkbox" id="inputCall1" name="inputCheckboxesCall" class="peer">
-                <label for="inputCall1" class="peers peer-greed js-sb ai-c">
-                    <span class="peer peer-greed">Call John for Dinner</span>
-                </label>
-                </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-            </div>
-        </div>
-        </div>
-        <div class="masonry-item col-md-6">
-        <div class="bgc-white p-20 bd">
-            <h6 class="c-grey-900">Complex Form Layout</h6>
-            <div class="mT-30">
-            <form>
+                <form id="addpessoa_form" role="form" action="" method="post" enctype="multipart/form-data">
+                {% csrf_token %}
                 <div class="form-row">
                 <div class="form-group col-md-6">
-                    <label for="inputEmail4">Email</label>
-                    <input type="email" class="form-control" id="inputEmail4" placeholder="Email">
+                    <label for="inputTipoEnd">Tipo de endereço</label>
+                    <input type="tipo_endereco" class="form-control" id="inputTipoEnd" placeholder="Selecione uma opção...">
                 </div>
                 <div class="form-group col-md-6">
-                    <label for="inputPassword4">Password</label>
-                    <input type="password" class="form-control" id="inputPassword4" placeholder="Password">
+                    <label for="inputZip">CEP</label>
+                    <input type="text" class="form-control" id="inputZip">
                 </div>
+                </div>
+                
+                <div class="form-group">
+                <label for="inputAddress">Logradouro<strong style="color:red;">*</strong></label>
+                <input type="text" class="form-control" id="inputAddress" placeholder="ex.: Rua Piauí 123 ">
                 </div>
                 <div class="form-group">
-                <label for="inputAddress">Address</label>
-                <input type="text" class="form-control" id="inputAddress" placeholder="1234 Main St">
-                </div>
-                <div class="form-group">
-                <label for="inputAddress2">Address 2</label>
-                <input type="text" class="form-control" id="inputAddress2" placeholder="Apartment, studio, or floor">
+                <label for="inputAddress2">Complemento</label>
+                <input type="text" class="form-control" id="inputAddress2" placeholder="ex.: Apartamento, Casa, Loja...">
                 </div>
                 <div class="form-row">
                 <div class="form-group col-md-6">
-                    <label for="inputCity">City</label>
-                    <input type="text" class="form-control" id="inputCity">
+                    <label for="inputCidade">Cidade<strong style="color:red;">*</strong></label>
+                    <input type="text" class="form-control" id="inputCidade">
                 </div>
                 <div class="form-group col-md-4">
-                    <label for="inputState">State</label>
+                    <label for="inputState">Estado<strong style="color:red;">*</strong></label>
                     <select id="inputState" class="form-control">
-                    <option selected="selected">Choose...</option>
+                    <option selected="selected">Selecione uma opção...</option>
                     <option>...</option>
                     </select>
                 </div>
                 <div class="form-group col-md-2">
-                    <label for="inputZip">Zip</label>
+                    <label for="inputZip">CEP</label>
                     <input type="text" class="form-control" id="inputZip">
                 </div>
                 </div>
-                <div class="form-row">
-                <div class="form-group col-md-6">
-                    <label class="fw-500">Birthdate</label>
-                    <div class="timepicker-input input-icon form-group">
-                    <div class="input-group">
-                        <div class="input-group-addon bgc-white bd bdwR-0">
-                        <i class="ti-calendar"></i>
-                        </div>
-                        <input type="text" class="form-control bdc-grey-200 start-date" placeholder="Datepicker" data-provide="datepicker">
-                    </div>
-                    </div>
-                </div>
-                </div>
-                <div class="form-group">
+
+                {% comment %} <div class="form-group">
                 <div class="checkbox checkbox-circle checkbox-info peers ai-c">
                     <input type="checkbox" id="inputCall2" name="inputCheckboxesCall" class="peer">
                     <label for="inputCall2" class="peers peer-greed js-sb ai-c">
                     <span class="peer peer-greed">Call John for Dinner</span>
                     </label>
                 </div>
-                </div>
-                <button type="submit" class="btn btn-primary">Sign in</button>
+                </div> {% endcomment %}
+                <button type="submit" class="btn btn-primary">SALVAR</button>
             </form>
             </div>
         </div>
         </div>
-        <div class="masonry-item col-md-6">
+        {% comment %} <div class="masonry-item col-md-6">
         <div class="bgc-white p-20 bd">
             <h6 class="c-grey-900">Horizontal Form</h6>
             <div class="mT-30">
@@ -187,46 +158,43 @@
             </form>
             </div>
         </div>
-        </div>
+        </div> {% endcomment %}
         <div class="masonry-item col-md-6">
         <div class="bgc-white p-20 bd">
-            <h6 class="c-grey-900">Validation</h6>
+            <h6 class="c-grey-900">Sobre você</h6>
             <div class="mT-30">
             <form class="container" id="needs-validation" novalidate>
                 <div class="row">
                 <div class="col-md-6 mb-3">
-                    <label for="validationCustom01">First name</label>
-                    <input type="text" class="form-control" id="validationCustom01" placeholder="First name" value="Mark" required>
+                    <label for="validationCustom01">Seu nome</label>
+                    <input type="text" class="form-control" id="validationCustom01" placeholder="ex.: Antônio" required>
                 </div>
                 <div class="col-md-6 mb-3">
-                    <label for="validationCustom02">Last name</label>
-                    <input type="text" class="form-control" id="validationCustom02" placeholder="Last name" value="Otto" required>
+                    <label for="validationCustom02">Seu sobrenome</label>
+                    <input type="text" class="form-control" id="validationCustom02" placeholder="ex.: da Silva" required>
                 </div>
                 </div>
                 <div class="row">
                 <div class="col-md-6 mb-3">
-                    <label for="validationCustom03">City</label>
-                    <input type="text" class="form-control" id="validationCustom03" placeholder="City" required>
+                    <label for="validationCustom03">Identidade</label>
+                    <input type="text" class="form-control" id="validationCustom03" placeholder="ex.: 00000001" required>
                     <div class="invalid-feedback">
-                    Please provide a valid city.
+                    Por favor! Insira um número de Identidade Válido.
+                    </div>
+           
+                <div class="col-md-6 mb-3">
+                    <label class="fw-500">Seu Aniversárioo<strong style="color:red;">*</strong></label>
+                    <div class="timepicker-input input-icon form-group">
+                    <div class="input-group">
+                        <div class="input-group-addon bgc-white bd bdwR-0">
+                        <i class="ti-calendar"></i>
+                        </div>
+                        <input type="text" class="form-control bdc-grey-200 start-date" placeholder="Datepicker" data-provide="datepicker">
+                    </div>
                     </div>
                 </div>
-                <div class="col-md-3 mb-3">
-                    <label for="validationCustom04">State</label>
-                    <input type="text" class="form-control" id="validationCustom04" placeholder="State" required>
-                    <div class="invalid-feedback">
-                    Please provide a valid state.
-                    </div>
-                </div>
-                <div class="col-md-3 mb-3">
-                    <label for="validationCustom05">Zip</label>
-                    <input type="text" class="form-control" id="validationCustom05" placeholder="Zip" required>
-                    <div class="invalid-feedback">
-                    Please provide a valid zip.
-                    </div>
-                </div>
-                </div>
-                <button class="btn btn-primary" type="submit">Submit form</button>
+         
+                <button class="btn btn-primary" type="submit">SALVAR</button>
             </form>
             <script>
                 // Example starter JavaScript for disabling form submissions if there are invalid fields

@@ -1,8 +1,3 @@
-# -*- encoding: utf-8 -*-
-"""
-Copyright (c) 2019 - present AppSeed.us
-"""
-
 # Create your views here.
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
@@ -24,9 +19,9 @@ def login_view(request):
                 login(request, user)
                 return redirect("/")
             else:
-                msg = 'Invalid credentials'
+                msg = 'Credenciais Inválidas'
         else:
-            msg = 'Error validating the form'
+            msg = 'Erro na validação do Formuário'
 
     return render(request, "accounts/login.html", {"form": form, "msg": msg})
 
@@ -43,13 +38,14 @@ def register_user(request):
             raw_password = form.cleaned_data.get("password1")
             user = authenticate(username=username, password=raw_password)
 
-            msg = 'User created - please <a href="/login">login</a>.'
+            msg = 'Usuário criado com sucesso - Por favor <a href="/login">Entre aqui</a>.'
             success = True
 
             # return redirect("/login/")
 
         else:
-            msg = 'Form is not valid'
+            msg = 'O formulário não é válido'
+
     else:
         form = SignUpForm()
 
